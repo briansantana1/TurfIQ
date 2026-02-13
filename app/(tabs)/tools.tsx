@@ -1,3 +1,4 @@
+import ProductSearch from '@/components/ProductSearch';
 import Colors from '@/constants/Colors';
 import {
     SPREADER_BRANDS as DB_BRANDS,
@@ -32,15 +33,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const FREE_BRAND_IDS = ['scotts', 'earthway', 'lesco'];
 
-type ToolTab = 'spreader' | 'npk' | 'cost';
+type ToolTab = 'search' | 'spreader' | 'npk' | 'cost';
 
 export default function ToolsScreen() {
     const router = useRouter();
     const params = useLocalSearchParams<{ tab?: string }>();
-    const [activeTab, setActiveTab] = useState<ToolTab>('spreader');
+    const [activeTab, setActiveTab] = useState<ToolTab>('search');
 
     useEffect(() => {
-        if (params.tab === 'spreader' || params.tab === 'npk' || params.tab === 'cost') {
+        if (params.tab === 'search' || params.tab === 'spreader' || params.tab === 'npk' || params.tab === 'cost') {
             setActiveTab(params.tab as ToolTab);
         }
     }, [params.tab]);
@@ -108,6 +109,13 @@ export default function ToolsScreen() {
                 {!selectedBrand && !selectedModel && (
                     <View style={styles.tabRow}>
                         <Pressable
+                            style={[styles.tab, activeTab === 'search' && styles.tabActive]}
+                            onPress={() => setActiveTab('search')}
+                        >
+                            <Search size={16} color={activeTab === 'search' ? '#FFF' : Colors.light.textMuted} />
+                            <Text style={[styles.tabText, activeTab === 'search' && styles.tabTextActive]}>Search</Text>
+                        </Pressable>
+                        <Pressable
                             style={[styles.tab, activeTab === 'spreader' && styles.tabActive]}
                             onPress={() => setActiveTab('spreader')}
                         >
@@ -135,6 +143,24 @@ export default function ToolsScreen() {
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scrollContent}
                 >
+                    {/* Product Search */}
+                    {activeTab === 'search' && (
+                        <View>
+                            <View style={styles.infoBanner}>
+                                <Search size={18} color={Colors.light.primary} />
+                                <View style={styles.infoBannerText}>
+                                    <Text style={styles.infoBannerTitle}>
+                                        Search 240+ Lawn Care Products
+                                    </Text>
+                                    <Text style={styles.infoBannerSubtitle}>
+                                        Find spreader settings for any fertilizer, weed killer, or specialty product
+                                    </Text>
+                                </View>
+                            </View>
+                            <ProductSearch />
+                        </View>
+                    )}
+
                     {/* Spreader Database */}
                     {activeTab === 'spreader' && (
                         <View>
