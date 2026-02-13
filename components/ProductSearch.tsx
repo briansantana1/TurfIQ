@@ -1,9 +1,10 @@
 import Colors from '@/constants/Colors';
 import { getAllBrands, SPREADER_SETTINGS, SpreaderBrand, SpreaderSettingEntry } from '@/data/spreaderDatabase';
 import { fuzzySearchProducts, getAutocompleteSuggestions, highlightMatch } from '@/utils/fuzzyMatch';
-import { ChevronRight, Search, X } from 'lucide-react-native';
+import { AlertCircle, ChevronRight, Search, Send, X } from 'lucide-react-native';
 import React, { useMemo, useState } from 'react';
 import {
+    Alert,
     FlatList,
     Modal,
     Pressable,
@@ -21,6 +22,12 @@ interface ProductSearchProps {
 export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [showRequestModal, setShowRequestModal] = useState(false);
+    const [requestForm, setRequestForm] = useState({
+        productName: '',
+        whereToBuy: '',
+        spreaderModel: '',
+    });
     const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
     // Get unique products from settings
@@ -90,6 +97,39 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
 
     const handleCloseModal = () => {
         setSelectedProduct(null);
+    };
+
+    const handleOpenRequestModal = () => {
+        setShowRequestModal(true);
+        // Pre-fill with search query if available
+        if (searchQuery.trim()) {
+            setRequestForm(prev => ({ ...prev, productName: searchQuery.trim() }));
+        }
+    };
+
+    const handleCloseRequestModal = () => {
+        setShowRequestModal(false);
+        setRequestForm({ productName: '', whereToBuy: '', spreaderModel: '' });
+    };
+
+    const handleSubmitRequest = () => {
+        if (!requestForm.productName.trim()) {
+            Alert.alert('Missing Information', 'Please enter a product or spreader name.');
+            return;
+        }
+
+        // TODO: Send to backend/email
+        // For now, just show success message
+        Alert.alert(
+            'Request Submitted!',
+            `Thanks for your request! We'll add "${requestForm.productName}" to our database soon.`,
+            [
+                {
+                    text: 'OK',
+                    onPress: handleCloseRequestModal,
+                },
+            ]
+        );
     };
 
     const renderHighlightedText = (text: string, query: string) => {
@@ -200,9 +240,20 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
                         </>
                     ) : (
                         <View style={styles.noResults}>
+                            <AlertCircle size={48} color={Colors.light.textSecondary} />
                             <Text style={styles.noResultsText}>No products found</Text>
                             <Text style={styles.noResultsSubtext}>
-                                Try searching for:
+                                Can't find what you're looking for?
+                            </Text>
+                            <Pressable
+                                style={styles.requestButton}
+                                onPress={handleOpenRequestModal}
+                            >
+                                <Send size={18} color={Colors.light.surface} />
+                                <Text style={styles.requestButtonText}>Request This Product</Text>
+                            </Pressable>
+                            <Text style={styles.noResultsHelp}>
+                                Or try searching for:
                             </Text>
                             <Text style={styles.noResultsSubtext}>
                                 • Professional products (Headway G, Tenacity, Acelepryn)
@@ -228,6 +279,12 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
                     <Text style={styles.emptyStateSubtext}>
                         Professional & consumer products from SiteOne, DoMyOwn, and major retailers
                     </Text>
+                    <Pressable
+                        style={styles.requestLinkButton}
+                        onPress={handleOpenRequestModal}
+                    >
+                        <Text style={styles.requestLinkText}>Missing a product? Request it here</Text>
+                    </Pressable>
                 </View>
             )}
 
@@ -277,6 +334,75 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
                                 })}
                             </View>
                         ))}
+                    </ScrollView>
+                </View>
+            </Modal>
+
+            {/* Request Product Modal */}
+            <Modal
+                visible={showRequestModal}
+                animationType="slide"
+                presentationStyle="pageSheet"
+                onRequestClose={handleCloseRequestModal}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalHeader}>
+                        <View style={styles.modalHeaderContent}>
+                            <Text style={styles.modalTitle}>Request Product or Spreader</Text>
+                            <Text style={styles.modalSubtitle}>
+                                We'll add it to our database
+                            </Text>
+                        </View>
+                        <Pressable onPress={handleCloseRequestModal} style={styles.closeButton}>
+                            <X size={24} color={Colors.light.text} />
+                        </Pressable>
+                    </View>
+
+                    <ScrollView style={styles.modalContent}>
+                        <View style={styles.requestFormContainer}>
+                            <Text style={styles.formLabel}>Product or Spreader Name *</Text>
+                            <TextInput
+                                style={styles.formInput}
+                                placeholder="e.g., Headway G, Scotts EdgeGuard Mini"
+                                placeholderTextColor={Colors.light.textSecondary}
+                                value={requestForm.productName}
+                                onChangeText={(text) => setRequestForm(prev => ({ ...prev, productName: text }))}
+                                autoFocus
+                            />
+
+                            <Text style={styles.formLabel}>Where to Buy (Optional)</Text>
+                            <TextInput
+                                style={styles.formInput}
+                                placeholder="e.g., SiteOne, DoMyOwn, Home Depot"
+                                placeholderTextColor={Colors.light.textSecondary}
+                                value={requestForm.whereToBuy}
+                                onChangeText={(text) => setRequestForm(prev => ({ ...prev, whereToBuy: text }))}
+                            />
+
+                            <Text style={styles.formLabel}>Your Spreader Model (Optional)</Text>
+                            <TextInput
+                                style={styles.formInput}
+                                placeholder="e.g., Scotts EdgeGuard DLX"
+                                placeholderTextColor={Colors.light.textSecondary}
+                                value={requestForm.spreaderModel}
+                                onChangeText={(text) => setRequestForm(prev => ({ ...prev, spreaderModel: text }))}
+                            />
+
+                            <View style={styles.formInfo}>
+                                <AlertCircle size={16} color={Colors.light.primary} />
+                                <Text style={styles.formInfoText}>
+                                    We'll research and add this to our database. You'll see it in a future update!
+                                </Text>
+                            </View>
+
+                            <Pressable
+                                style={styles.submitButton}
+                                onPress={handleSubmitRequest}
+                            >
+                                <Send size={20} color={Colors.light.surface} />
+                                <Text style={styles.submitButtonText}>Submit Request</Text>
+                            </Pressable>
+                        </View>
                     </ScrollView>
                 </View>
             </Modal>
@@ -499,5 +625,87 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: Colors.light.textMuted,
         marginTop: 4,
+    },
+    // Request Modal Styles
+    requestButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.light.primary,
+        paddingHorizontal: 24,
+        paddingVertical: 14,
+        borderRadius: 12,
+        marginVertical: 16,
+        gap: 8,
+    },
+    requestButtonText: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: Colors.light.surface,
+    },
+    noResultsHelp: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: Colors.light.text,
+        marginTop: 16,
+        marginBottom: 8,
+    },
+    requestLinkButton: {
+        marginTop: 16,
+        padding: 8,
+    },
+    requestLinkText: {
+        fontSize: 14,
+        color: Colors.light.primary,
+        textDecorationLine: 'underline',
+    },
+    requestFormContainer: {
+        gap: 16,
+    },
+    formLabel: {
+        fontSize: 15,
+        fontWeight: '600',
+        color: Colors.light.text,
+        marginBottom: 8,
+    },
+    formInput: {
+        backgroundColor: Colors.light.surface,
+        borderRadius: 12,
+        padding: 16,
+        fontSize: 16,
+        color: Colors.light.text,
+        borderWidth: 1,
+        borderColor: Colors.light.border,
+    },
+    formInfo: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        backgroundColor: Colors.light.primaryLight + '20',
+        padding: 12,
+        borderRadius: 8,
+        gap: 8,
+        marginTop: 8,
+    },
+    formInfoText: {
+        flex: 1,
+        fontSize: 13,
+        color: Colors.light.text,
+        lineHeight: 18,
+    },
+    submitButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.light.primary,
+        paddingHorizontal: 24,
+        paddingVertical: 16,
+        borderRadius: 12,
+        marginTop: 16,
+        gap: 8,
+    },
+    submitButtonText: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: Colors.light.surface,
     },
 });
