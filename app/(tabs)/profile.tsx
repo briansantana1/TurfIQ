@@ -1,4 +1,5 @@
 import Colors from '@/constants/Colors';
+import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import {
     Bell,
@@ -33,6 +34,9 @@ export default function ProfileScreen() {
                 break;
             case 'terms':
                 WebBrowser.openBrowserAsync('https://lawnguardian.net/terms-of-use');
+                break;
+            case 'help':
+                Linking.openURL('mailto:info.turfiq@yahoo.com');
                 break;
             default:
                 Alert.alert('Coming Soon', 'This feature is currently under development. Stay tuned for future updates!');
