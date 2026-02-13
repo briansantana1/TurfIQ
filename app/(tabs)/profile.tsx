@@ -1,5 +1,4 @@
 import Colors from '@/constants/Colors';
-import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import {
     Bell,
@@ -24,6 +23,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
+    const router = useRouter();
     const handleAction = (action: string) => {
         switch (action) {
             case 'upgrade':
@@ -35,8 +35,8 @@ export default function ProfileScreen() {
             case 'terms':
                 WebBrowser.openBrowserAsync('https://turfiq.app/terms-of-use');
                 break;
-            case 'help':
-                Linking.openURL('mailto:info.turfiq@yahoo.com');
+            case 'contact':
+                router.push('/contact');
                 break;
             default:
                 Alert.alert('Coming Soon', 'This feature is currently under development. Stay tuned for future updates!');
@@ -75,10 +75,10 @@ export default function ProfileScreen() {
         },
         {
             icon: HelpCircle,
-            title: 'Help & Support',
-            subtitle: 'FAQ, contact us',
+            title: 'Contact Us',
+            subtitle: 'Get in touch with us',
             color: Colors.light.secondary,
-            action: 'help',
+            action: 'contact',
         },
         {
             icon: Star,
