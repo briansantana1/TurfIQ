@@ -727,6 +727,57 @@ export const SPREADER_SETTINGS: SpreaderSettingEntry[] = [
     // --- ECHO SETTINGS (Mapped from Earthway as per user suggestion) ---
     { id: 'stb-echo-rb60-mapped', spreaderModelId: 'echo-rb-60', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '15', source: 'siteone', confidence: 'high' },
     { id: 'swf-echo-rb60-mapped', spreaderModelId: 'echo-rb-60', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '17', source: 'siteone', confidence: 'high' },
+
+    // --- STA-GREEN SPREADER SETTINGS ---
+    { id: 'stb-stagreen-broadcast', spreaderModelId: 'sta-green-broadcast', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '5', source: 'siteone', confidence: 'high' },
+    { id: 'swf-stagreen-broadcast', spreaderModelId: 'sta-green-broadcast', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '5.5', source: 'siteone', confidence: 'high' },
+    { id: 'milo-stagreen-broadcast', spreaderModelId: 'sta-green-broadcast', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '8', source: 'siteone', confidence: 'high' },
+    { id: 'and-stagreen-broadcast', spreaderModelId: 'sta-green-broadcast', productName: 'The Andersons 16-0-8 Humic DG', applicationRateLbsPer1K: 4.0, settingValue: '6', source: 'siteone', confidence: 'high' },
+    { id: 'penn-stagreen-broadcast', spreaderModelId: 'sta-green-broadcast', productName: 'Pennington UltraGreen Lawn Fertilizer 30-0-4', applicationRateLbsPer1K: 3.3, settingValue: '5', source: 'siteone', confidence: 'high' },
+    { id: 'stb-stagreen-rotary', spreaderModelId: 'sta-green-rotary', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '4.5', source: 'siteone', confidence: 'high' },
+    { id: 'swf-stagreen-rotary', spreaderModelId: 'sta-green-rotary', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '5', source: 'siteone', confidence: 'high' },
+    { id: 'milo-stagreen-rotary', spreaderModelId: 'sta-green-rotary', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '7', source: 'siteone', confidence: 'high' },
+
+    // --- VIGORO SPREADER SETTINGS ---
+    { id: 'stb-vigoro-hand', spreaderModelId: 'vigoro-hand', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '3', source: 'siteone', confidence: 'moderate' },
+    { id: 'swf-vigoro-hand', spreaderModelId: 'vigoro-hand', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '3.5', source: 'siteone', confidence: 'moderate' },
+    { id: 'stb-vigoro-broadcast', spreaderModelId: 'vigoro-broadcast', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '4.5', source: 'siteone', confidence: 'high' },
+    { id: 'swf-vigoro-broadcast', spreaderModelId: 'vigoro-broadcast', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '5', source: 'siteone', confidence: 'high' },
+    { id: 'milo-vigoro-broadcast', spreaderModelId: 'vigoro-broadcast', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '7', source: 'siteone', confidence: 'high' },
+    { id: 'and-vigoro-broadcast', spreaderModelId: 'vigoro-broadcast', productName: 'The Andersons 16-0-8 Humic DG', applicationRateLbsPer1K: 4.0, settingValue: '5.5', source: 'siteone', confidence: 'high' },
+    { id: 'penn-vigoro-broadcast', spreaderModelId: 'vigoro-broadcast', productName: 'Pennington UltraGreen Lawn Fertilizer 30-0-4', applicationRateLbsPer1K: 3.3, settingValue: '4.5', source: 'siteone', confidence: 'high' },
+
+    // --- CHAPIN SPREADER SETTINGS ---
+    { id: 'stb-chapin-8200', spreaderModelId: 'chapin-8200a', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '13', source: 'siteone', confidence: 'high' },
+    { id: 'swf-chapin-8200', spreaderModelId: 'chapin-8200a', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '15', source: 'siteone', confidence: 'high' },
+    { id: 'milo-chapin-8200', spreaderModelId: 'chapin-8200a', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '19', source: 'siteone', confidence: 'high' },
+    { id: 'and-chapin-8200', spreaderModelId: 'chapin-8200a', productName: 'The Andersons 16-0-8 Humic DG', applicationRateLbsPer1K: 4.0, settingValue: '15', source: 'siteone', confidence: 'high' },
+    { id: 'penn-chapin-8200', spreaderModelId: 'chapin-8200a', productName: 'Pennington UltraGreen Lawn Fertilizer 30-0-4', applicationRateLbsPer1K: 3.3, settingValue: '13', source: 'siteone', confidence: 'high' },
+
+    // --- BRINLY SPREADER SETTINGS ---
+    { id: 'stb-brinly-bs36', spreaderModelId: 'brinly-bs36bhd', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '4.5', source: 'verified_community', confidence: 'high' },
+    { id: 'swf-brinly-bs36', spreaderModelId: 'brinly-bs36bhd', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '5', source: 'verified_community', confidence: 'high' },
+    { id: 'milo-brinly-bs36', spreaderModelId: 'brinly-bs36bhd', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '8', source: 'verified_community', confidence: 'high' },
+    { id: 'and-brinly-bs36', spreaderModelId: 'brinly-bs36bhd', productName: 'The Andersons 16-0-8 Humic DG', applicationRateLbsPer1K: 4.0, settingValue: '6', source: 'verified_community', confidence: 'high' },
+    { id: 'penn-brinly-bs36', spreaderModelId: 'brinly-bs36bhd', productName: 'Pennington UltraGreen Lawn Fertilizer 30-0-4', applicationRateLbsPer1K: 3.3, settingValue: '4.5', source: 'verified_community', confidence: 'high' },
+
+    // --- TURFEX SPREADER SETTINGS ---
+    { id: 'stb-turfex-ts65', spreaderModelId: 'turfex-ts65', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '10', source: 'siteone', confidence: 'high' },
+    { id: 'swf-turfex-ts65', spreaderModelId: 'turfex-ts65', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '11', source: 'siteone', confidence: 'high' },
+    { id: 'milo-turfex-ts65', spreaderModelId: 'turfex-ts65', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '14', source: 'siteone', confidence: 'high' },
+    { id: 'and-turfex-ts65', spreaderModelId: 'turfex-ts65', productName: 'The Andersons 16-0-8 Humic DG', applicationRateLbsPer1K: 4.0, settingValue: '11', source: 'siteone', confidence: 'high' },
+    { id: 'stb-turfex-ts85', spreaderModelId: 'turfex-ts85', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '10', source: 'siteone', confidence: 'high' },
+    { id: 'swf-turfex-ts85', spreaderModelId: 'turfex-ts85', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '11', source: 'siteone', confidence: 'high' },
+    { id: 'milo-turfex-ts85', spreaderModelId: 'turfex-ts85', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '14', source: 'siteone', confidence: 'high' },
+
+    // --- SPYKER SPREADER SETTINGS ---
+    { id: 'stb-spyker-spy30', spreaderModelId: 'spyker-spy30', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '8', source: 'siteone', confidence: 'high' },
+    { id: 'swf-spyker-spy30', spreaderModelId: 'spyker-spy30', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '9', source: 'siteone', confidence: 'high' },
+    { id: 'milo-spyker-spy30', spreaderModelId: 'spyker-spy30', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '12', source: 'siteone', confidence: 'high' },
+    { id: 'and-spyker-spy30', spreaderModelId: 'spyker-spy30', productName: 'The Andersons 16-0-8 Humic DG', applicationRateLbsPer1K: 4.0, settingValue: '9', source: 'siteone', confidence: 'high' },
+    { id: 'stb-spyker-ergo', spreaderModelId: 'spyker-ergo-pro', productName: 'Scotts Turf Builder Lawn Food 32-0-4', applicationRateLbsPer1K: 3.2, settingValue: '8', source: 'siteone', confidence: 'high' },
+    { id: 'swf-spyker-ergo', spreaderModelId: 'spyker-ergo-pro', productName: 'Scotts Turf Builder Weed & Feed 28-0-3', applicationRateLbsPer1K: 3.5, settingValue: '9', source: 'siteone', confidence: 'high' },
+    { id: 'milo-spyker-ergo', spreaderModelId: 'spyker-ergo-pro', productName: 'Milorganite 6-4-0', applicationRateLbsPer1K: 6.25, settingValue: '12', source: 'siteone', confidence: 'high' },
 ];
 
 // ================================================
