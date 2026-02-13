@@ -977,6 +977,64 @@ export const SPREADER_SETTINGS: SpreaderSettingEntry[] = [
     // --- DR. EARTH ORGANIC ---
     { id: 'drearth-lawn-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Dr. Earth Super Natural Lawn Fertilizer 9-0-5', applicationRateLbsPer1K: 11.1, settingValue: '9', source: 'manufacturer', confidence: 'high' },
     { id: 'drearth-lawn-earthway', spreaderModelId: 'earthway-2150', productName: 'Dr. Earth Super Natural Lawn Fertilizer 9-0-5', applicationRateLbsPer1K: 11.1, settingValue: '21', source: 'siteone', confidence: 'high' },
+
+    // ================================================
+    // PROFESSIONAL PRODUCTS (SiteOne / DoMyOwn)
+    // ================================================
+
+    // --- PROFESSIONAL FUNGICIDES ---
+    { id: 'headwayg-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Headway G Fungicide (Azoxystrobin + Propiconazole)', applicationRateLbsPer1K: 3.5, settingValue: '4.5', source: 'siteone', confidence: 'high' },
+    { id: 'headwayg-earthway', spreaderModelId: 'earthway-2150', productName: 'Headway G Fungicide (Azoxystrobin + Propiconazole)', applicationRateLbsPer1K: 3.5, settingValue: '15', source: 'siteone', confidence: 'high' },
+    { id: 'headwayg-lesco', spreaderModelId: 'lesco-50lb', productName: 'Headway G Fungicide (Azoxystrobin + Propiconazole)', applicationRateLbsPer1K: 3.5, settingValue: '16', source: 'siteone', confidence: 'high' },
+
+    { id: 'clearys3336-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Cleary\'s 3336 DG Lite Fungicide (Thiophanate-methyl)', applicationRateLbsPer1K: 2.5, settingValue: '3.5', source: 'siteone', confidence: 'high' },
+    { id: 'clearys3336-earthway', spreaderModelId: 'earthway-2150', productName: 'Cleary\'s 3336 DG Lite Fungicide (Thiophanate-methyl)', applicationRateLbsPer1K: 2.5, settingValue: '12', source: 'siteone', confidence: 'high' },
+    { id: 'clearys3336-lesco', spreaderModelId: 'lesco-50lb', productName: 'Cleary\'s 3336 DG Lite Fungicide (Thiophanate-methyl)', applicationRateLbsPer1K: 2.5, settingValue: '14', source: 'siteone', confidence: 'high' },
+
+    { id: 'heritageg-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Heritage G Fungicide (Azoxystrobin)', applicationRateLbsPer1K: 3.0, settingValue: '4', source: 'siteone', confidence: 'high' },
+    { id: 'heritageg-earthway', spreaderModelId: 'earthway-2150', productName: 'Heritage G Fungicide (Azoxystrobin)', applicationRateLbsPer1K: 3.0, settingValue: '14', source: 'siteone', confidence: 'high' },
+    { id: 'heritageg-lesco', spreaderModelId: 'lesco-50lb', productName: 'Heritage G Fungicide (Azoxystrobin)', applicationRateLbsPer1K: 3.0, settingValue: '15', source: 'siteone', confidence: 'high' },
+
+    { id: 'propiconazole-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Propiconazole 14.3 Fungicide', applicationRateLbsPer1K: 2.8, settingValue: '3.5', source: 'siteone', confidence: 'high' },
+    { id: 'propiconazole-earthway', spreaderModelId: 'earthway-2150', productName: 'Propiconazole 14.3 Fungicide', applicationRateLbsPer1K: 2.8, settingValue: '13', source: 'siteone', confidence: 'high' },
+
+    { id: 'honor-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Honor Guard PPZ Fungicide (Propiconazole)', applicationRateLbsPer1K: 2.8, settingValue: '3.5', source: 'siteone', confidence: 'high' },
+    { id: 'honor-earthway', spreaderModelId: 'earthway-2150', productName: 'Honor Guard PPZ Fungicide (Propiconazole)', applicationRateLbsPer1K: 2.8, settingValue: '13', source: 'siteone', confidence: 'high' },
+
+    // --- PROFESSIONAL HERBICIDES ---
+    { id: 'tenacity-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Tenacity Herbicide (Mesotrione)', applicationRateLbsPer1K: 0, settingValue: 'N/A - Liquid Spray', source: 'siteone', confidence: 'official', notes: 'Liquid spray product' },
+
+    { id: 'drive-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Drive XLR8 Herbicide (Quinclorac)', applicationRateLbsPer1K: 0, settingValue: 'N/A - Liquid Spray', source: 'siteone', confidence: 'official', notes: 'Liquid spray product' },
+
+    { id: 'speedzone-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'SpeedZone Broadleaf Herbicide', applicationRateLbsPer1K: 0, settingValue: 'N/A - Liquid Spray', source: 'siteone', confidence: 'official', notes: 'Liquid spray product' },
+
+    { id: 'celsius-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Celsius WG Herbicide', applicationRateLbsPer1K: 0, settingValue: 'N/A - Liquid Spray', source: 'siteone', confidence: 'official', notes: 'Liquid spray product' },
+
+    { id: 'blindside-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Blindside Herbicide WDG', applicationRateLbsPer1K: 0, settingValue: 'N/A - Liquid Spray', source: 'siteone', confidence: 'official', notes: 'Liquid spray product' },
+
+    // --- PROFESSIONAL FERTILIZERS ---
+    { id: 'lesco-24-0-11-lesco', spreaderModelId: 'lesco-50lb', productName: 'Lesco 24-0-11 50% PCSCU Professional Fertilizer', applicationRateLbsPer1K: 4.2, settingValue: '19', source: 'manufacturer', confidence: 'official' },
+    { id: 'lesco-24-0-11-earthway', spreaderModelId: 'earthway-2150', productName: 'Lesco 24-0-11 50% PCSCU Professional Fertilizer', applicationRateLbsPer1K: 4.2, settingValue: '16', source: 'siteone', confidence: 'official' },
+
+    { id: 'lesco-18-0-18-lesco', spreaderModelId: 'lesco-50lb', productName: 'Lesco 18-0-18 Professional Fertilizer', applicationRateLbsPer1K: 5.6, settingValue: '20', source: 'manufacturer', confidence: 'official' },
+    { id: 'lesco-18-0-18-earthway', spreaderModelId: 'earthway-2150', productName: 'Lesco 18-0-18 Professional Fertilizer', applicationRateLbsPer1K: 5.6, settingValue: '17', source: 'siteone', confidence: 'official' },
+
+    { id: 'and-0-0-7-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'The Andersons 0-0-7 with Barricade Pre-Emergent', applicationRateLbsPer1K: 14.3, settingValue: '10', source: 'siteone', confidence: 'official' },
+    { id: 'and-0-0-7-earthway', spreaderModelId: 'earthway-2150', productName: 'The Andersons 0-0-7 with Barricade Pre-Emergent', applicationRateLbsPer1K: 14.3, settingValue: '22', source: 'siteone', confidence: 'official' },
+
+    { id: 'and-0-0-7-dim-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'The Andersons 0-0-7 with Dimension Pre-Emergent', applicationRateLbsPer1K: 14.3, settingValue: '10', source: 'siteone', confidence: 'official' },
+    { id: 'and-0-0-7-dim-earthway', spreaderModelId: 'earthway-2150', productName: 'The Andersons 0-0-7 with Dimension Pre-Emergent', applicationRateLbsPer1K: 14.3, settingValue: '22', source: 'siteone', confidence: 'official' },
+
+    // --- PROFESSIONAL INSECTICIDES ---
+    { id: 'acelepryn-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Acelepryn G Insecticide (Chlorantraniliprole)', applicationRateLbsPer1K: 3.5, settingValue: '4.5', source: 'siteone', confidence: 'high' },
+    { id: 'acelepryn-earthway', spreaderModelId: 'earthway-2150', productName: 'Acelepryn G Insecticide (Chlorantraniliprole)', applicationRateLbsPer1K: 3.5, settingValue: '15', source: 'siteone', confidence: 'high' },
+    { id: 'acelepryn-lesco', spreaderModelId: 'lesco-50lb', productName: 'Acelepryn G Insecticide (Chlorantraniliprole)', applicationRateLbsPer1K: 3.5, settingValue: '16', source: 'siteone', confidence: 'high' },
+
+    { id: 'merit-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Merit 0.5G Insecticide (Imidacloprid)', applicationRateLbsPer1K: 4.0, settingValue: '5', source: 'siteone', confidence: 'high' },
+    { id: 'merit-earthway', spreaderModelId: 'earthway-2150', productName: 'Merit 0.5G Insecticide (Imidacloprid)', applicationRateLbsPer1K: 4.0, settingValue: '16', source: 'siteone', confidence: 'high' },
+
+    { id: 'arena-scotts', spreaderModelId: 'scotts-edgeguard-dlx', productName: 'Arena 0.25G Insecticide (Clothianidin)', applicationRateLbsPer1K: 4.0, settingValue: '5', source: 'siteone', confidence: 'high' },
+    { id: 'arena-earthway', spreaderModelId: 'earthway-2150', productName: 'Arena 0.25G Insecticide (Clothianidin)', applicationRateLbsPer1K: 4.0, settingValue: '16', source: 'siteone', confidence: 'high' },
 ];
 
 // ================================================

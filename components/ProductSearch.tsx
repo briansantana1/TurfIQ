@@ -1,11 +1,13 @@
 import Colors from '@/constants/Colors';
-import { SPREADER_SETTINGS, SpreaderSettingEntry } from '@/data/spreaderDatabase';
+import { getAllBrands, SPREADER_SETTINGS, SpreaderBrand, SpreaderSettingEntry } from '@/data/spreaderDatabase';
 import { fuzzySearchProducts, getAutocompleteSuggestions, highlightMatch } from '@/utils/fuzzyMatch';
-import { Search, X } from 'lucide-react-native';
+import { ChevronRight, Search, X } from 'lucide-react-native';
 import React, { useMemo, useState } from 'react';
 import {
     FlatList,
+    Modal,
     Pressable,
+    ScrollView,
     StyleSheet,
     Text,
     TextInput,
@@ -19,6 +21,7 @@ interface ProductSearchProps {
 export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
 
     // Get unique products from settings
     const uniqueProducts = useMemo(() => {
@@ -47,6 +50,30 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
         return getAutocompleteSuggestions(searchQuery, uniqueProducts, 5);
     }, [searchQuery, uniqueProducts]);
 
+    // Get all settings for selected product
+    const selectedProductSettings = useMemo(() => {
+        if (!selectedProduct) return [];
+        return SPREADER_SETTINGS.filter(s => s.productName === selectedProduct);
+    }, [selectedProduct]);
+
+    // Group settings by brand
+    const settingsByBrand = useMemo(() => {
+        const brands = getAllBrands();
+        const grouped = new Map<string, { brand: SpreaderBrand; settings: SpreaderSettingEntry[] }>();
+
+        selectedProductSettings.forEach(setting => {
+            const brand = brands.find(b => b.models.some(m => m.id === setting.spreaderModelId));
+            if (brand) {
+                if (!grouped.has(brand.id)) {
+                    grouped.set(brand.id, { brand, settings: [] });
+                }
+                grouped.get(brand.id)!.settings.push(setting);
+            }
+        });
+
+        return Array.from(grouped.values());
+    }, [selectedProductSettings]);
+
     const handleClearSearch = () => {
         setSearchQuery('');
         setShowSuggestions(false);
@@ -57,8 +84,12 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
         setShowSuggestions(false);
     };
 
-    const handleProductPress = (product: SpreaderSettingEntry) => {
-        onProductSelect?.(product);
+    const handleProductPress = (productName: string) => {
+        setSelectedProduct(productName);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedProduct(null);
     };
 
     const renderHighlightedText = (text: string, query: string) => {
@@ -77,25 +108,33 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
         );
     };
 
-    const renderProduct = ({ item }: { item: SpreaderSettingEntry }) => (
-        <Pressable
-            style={({ pressed }) => [
-                styles.productItem,
-                pressed && styles.productItemPressed,
-            ]}
-            onPress={() => handleProductPress(item)}
-        >
-            <View style={styles.productInfo}>
-                {renderHighlightedText(item.productName, searchQuery)}
-                <Text style={styles.productRate}>
-                    Application Rate: {item.applicationRateLbsPer1K} lbs/1000 sq ft
-                </Text>
-                {item.notes && (
-                    <Text style={styles.productNotes}>{item.notes}</Text>
-                )}
-            </View>
-        </Pressable>
-    );
+    const renderProduct = ({ item }: { item: SpreaderSettingEntry }) => {
+        const settingsCount = SPREADER_SETTINGS.filter(s => s.productName === item.productName).length;
+
+        return (
+            <Pressable
+                style={({ pressed }) => [
+                    styles.productItem,
+                    pressed && styles.productItemPressed,
+                ]}
+                onPress={() => handleProductPress(item.productName)}
+            >
+                <View style={styles.productInfo}>
+                    {renderHighlightedText(item.productName, searchQuery)}
+                    <Text style={styles.productRate}>
+                        Application Rate: {item.applicationRateLbsPer1K} lbs/1000 sq ft
+                    </Text>
+                    {item.notes && (
+                        <Text style={styles.productNotes}>{item.notes}</Text>
+                    )}
+                    <Text style={styles.settingsCount}>
+                        {settingsCount} spreader setting{settingsCount !== 1 ? 's' : ''} available
+                    </Text>
+                </View>
+                <ChevronRight size={20} color={Colors.light.textSecondary} />
+            </Pressable>
+        );
+    };
 
     const renderSuggestion = ({ item }: { item: string }) => (
         <Pressable
@@ -117,7 +156,7 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
                 <Search size={20} color={Colors.light.textSecondary} style={styles.searchIcon} />
                 <TextInput
                     style={styles.searchInput}
-                    placeholder="Search products (e.g., Milorganite, weed killer, lime)"
+                    placeholder="Search products (e.g., Headway G, Milorganite, Tenacity)"
                     placeholderTextColor={Colors.light.textSecondary}
                     value={searchQuery}
                     onChangeText={setSearchQuery}
@@ -166,13 +205,13 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
                                 Try searching for:
                             </Text>
                             <Text style={styles.noResultsSubtext}>
+                                • Professional products (Headway G, Tenacity, Acelepryn)
+                            </Text>
+                            <Text style={styles.noResultsSubtext}>
                                 • Fertilizer brands (Scotts, Milorganite, Pennington)
                             </Text>
                             <Text style={styles.noResultsSubtext}>
                                 • Product types (weed killer, fungicide, lime)
-                            </Text>
-                            <Text style={styles.noResultsSubtext}>
-                                • NPK ratios (32-0-4, 16-4-8)
                             </Text>
                         </View>
                     )}
@@ -184,13 +223,63 @@ export default function ProductSearch({ onProductSelect }: ProductSearchProps) {
                 <View style={styles.emptyState}>
                     <Search size={48} color={Colors.light.textSecondary} />
                     <Text style={styles.emptyStateText}>
-                        Search 240+ lawn care products
+                        Search 280+ lawn care products
                     </Text>
                     <Text style={styles.emptyStateSubtext}>
-                        Find spreader settings for fertilizers, weed killers, fungicides, and more
+                        Professional & consumer products from SiteOne, DoMyOwn, and major retailers
                     </Text>
                 </View>
             )}
+
+            {/* Product Details Modal */}
+            <Modal
+                visible={selectedProduct !== null}
+                animationType="slide"
+                presentationStyle="pageSheet"
+                onRequestClose={handleCloseModal}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalHeader}>
+                        <View style={styles.modalHeaderContent}>
+                            <Text style={styles.modalTitle}>{selectedProduct}</Text>
+                            <Text style={styles.modalSubtitle}>
+                                {settingsByBrand.length} brand{settingsByBrand.length !== 1 ? 's' : ''} • {selectedProductSettings.length} setting{selectedProductSettings.length !== 1 ? 's' : ''}
+                            </Text>
+                        </View>
+                        <Pressable onPress={handleCloseModal} style={styles.closeButton}>
+                            <X size={24} color={Colors.light.text} />
+                        </Pressable>
+                    </View>
+
+                    <ScrollView style={styles.modalContent}>
+                        {settingsByBrand.map(({ brand, settings }) => (
+                            <View key={brand.id} style={styles.brandSection}>
+                                <Text style={styles.brandName}>{brand.name}</Text>
+                                {settings.map(setting => {
+                                    const model = brand.models.find(m => m.id === setting.spreaderModelId);
+                                    return (
+                                        <View key={setting.id} style={styles.settingCard}>
+                                            <View style={styles.settingHeader}>
+                                                <Text style={styles.modelName}>{model?.name}</Text>
+                                                <Text style={styles.settingValue}>{setting.settingValue}</Text>
+                                            </View>
+                                            <Text style={styles.settingDetail}>
+                                                Application Rate: {setting.applicationRateLbsPer1K} lbs/1000 sq ft
+                                            </Text>
+                                            {setting.notes && (
+                                                <Text style={styles.settingNotes}>{setting.notes}</Text>
+                                            )}
+                                            <Text style={styles.settingSource}>
+                                                Source: {setting.source} • {setting.confidence} confidence
+                                            </Text>
+                                        </View>
+                                    );
+                                })}
+                            </View>
+                        ))}
+                    </ScrollView>
+                </View>
+            </Modal>
         </View>
     );
 }
@@ -254,6 +343,8 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     productItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: Colors.light.surface,
         borderRadius: 12,
         padding: 16,
@@ -286,6 +377,12 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: Colors.light.textSecondary,
         fontStyle: 'italic',
+        marginBottom: 4,
+    },
+    settingsCount: {
+        fontSize: 13,
+        color: Colors.light.primary,
+        fontWeight: '600',
     },
     noResults: {
         padding: 24,
@@ -318,5 +415,89 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: Colors.light.textSecondary,
         textAlign: 'center',
+    },
+    // Modal Styles
+    modalContainer: {
+        flex: 1,
+        backgroundColor: Colors.light.background,
+    },
+    modalHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.light.border,
+        backgroundColor: Colors.light.surface,
+    },
+    modalHeaderContent: {
+        flex: 1,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: '700',
+        color: Colors.light.text,
+        marginBottom: 4,
+    },
+    modalSubtitle: {
+        fontSize: 14,
+        color: Colors.light.textSecondary,
+    },
+    closeButton: {
+        padding: 8,
+    },
+    modalContent: {
+        flex: 1,
+        padding: 20,
+    },
+    brandSection: {
+        marginBottom: 24,
+    },
+    brandName: {
+        fontSize: 18,
+        fontWeight: '700',
+        color: Colors.light.text,
+        marginBottom: 12,
+    },
+    settingCard: {
+        backgroundColor: Colors.light.surface,
+        borderRadius: 12,
+        padding: 16,
+        marginBottom: 12,
+        borderWidth: 1,
+        borderColor: Colors.light.border,
+    },
+    settingHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    modelName: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: Colors.light.text,
+        flex: 1,
+    },
+    settingValue: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: Colors.light.primary,
+    },
+    settingDetail: {
+        fontSize: 14,
+        color: Colors.light.textSecondary,
+        marginBottom: 4,
+    },
+    settingNotes: {
+        fontSize: 13,
+        color: Colors.light.textSecondary,
+        fontStyle: 'italic',
+        marginBottom: 4,
+    },
+    settingSource: {
+        fontSize: 12,
+        color: Colors.light.textMuted,
+        marginTop: 4,
     },
 });
