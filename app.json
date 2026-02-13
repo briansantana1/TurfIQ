@@ -1,23 +1,23 @@
 {
   "expo": {
-    "name": "Lawn Calculator",
-    "slug": "lawn-calculator",
+    "name": "TurfIQ",
+    "slug": "turfiq",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "lawncalculator",
+    "scheme": "turfiq",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.lawncalculator.app"
+      "bundleIdentifier": "com.turfiq.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#16A34A"
       },
-      "package": "com.lawncalculator.app"
+      "package": "com.turfiq.app"
     },
     "web": {
       "bundler": "metro",

@@ -102,7 +102,7 @@ export default function ProfileScreen() {
                             <User size={28} color={Colors.light.primary} />
                         </View>
                         <View style={styles.userInfo}>
-                            <Text style={styles.userName}>Lawn Enthusiast</Text>
+                            <Text style={styles.userName}>TurfIQ Enthusiast</Text>
                             <View style={styles.tierBadge}>
                                 <Text style={styles.tierText}>Free Tier</Text>
                             </View>
