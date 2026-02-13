@@ -8,7 +8,7 @@ import {
     SpreaderBrand,
     SpreaderModel,
 } from '@/data/spreaderDatabase';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
     ChevronLeft,
     ChevronRight,
