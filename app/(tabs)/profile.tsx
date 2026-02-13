@@ -30,10 +30,10 @@ export default function ProfileScreen() {
                 Alert.alert('TurfIQ Pro', 'Subscriptions are coming soon! You will get unlimited zones, full spreader database access, and advanced lawn diagnostics.');
                 break;
             case 'privacy':
-                WebBrowser.openBrowserAsync('https://raw.githubusercontent.com/briansantana1/TurfIQ/main/legal/privacy-policy.md');
+                WebBrowser.openBrowserAsync('https://turfiq.app/privacy-policy');
                 break;
             case 'terms':
-                WebBrowser.openBrowserAsync('https://raw.githubusercontent.com/briansantana1/TurfIQ/main/legal/terms-of-use.md');
+                WebBrowser.openBrowserAsync('https://turfiq.app/terms-of-use');
                 break;
             case 'help':
                 Linking.openURL('mailto:info.turfiq@yahoo.com');
