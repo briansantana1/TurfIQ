@@ -33,7 +33,7 @@ export default function DashboardScreen() {
       icon: Map,
       color: Colors.light.primary,
       bg: Colors.light.safeBg,
-      route: 'measure' as const,
+      route: '/measure' as const,
     },
     {
       id: 'calculate',
@@ -42,7 +42,7 @@ export default function DashboardScreen() {
       icon: Calculator,
       color: Colors.light.info,
       bg: Colors.light.highBg,
-      route: 'calculate' as const,
+      route: '/calculate' as const,
     },
     {
       id: 'spreader',
@@ -51,7 +51,7 @@ export default function DashboardScreen() {
       icon: Target,
       color: Colors.light.accent,
       bg: Colors.light.cautionBg,
-      route: 'tools' as const,
+      route: '/tools' as const,
     },
     {
       id: 'npk',
@@ -60,7 +60,7 @@ export default function DashboardScreen() {
       icon: FlaskConical,
       color: '#8B5CF6',
       bg: '#EDE9FE',
-      route: 'tools' as const,
+      route: '/tools' as const,
     },
   ];
 
@@ -86,7 +86,7 @@ export default function DashboardScreen() {
           {/* Hero Card */}
           <Pressable
             style={styles.heroCard}
-            onPress={() => router.navigate('measure')}
+            onPress={() => router.navigate('/measure')}
           >
             <View style={styles.heroContent}>
               <View style={styles.heroIconContainer}>
@@ -144,7 +144,7 @@ export default function DashboardScreen() {
             </Text>
             <Pressable
               style={styles.emptyZonesButton}
-              onPress={() => router.navigate('measure')}
+              onPress={() => router.navigate('/measure')}
             >
               <Text style={styles.emptyZonesButtonText}>
                 + Add First Zone

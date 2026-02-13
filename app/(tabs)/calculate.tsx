@@ -164,7 +164,7 @@ export default function CalculateScreen() {
                                 if (router.canGoBack()) {
                                     router.back();
                                 } else {
-                                    router.replace('/');
+                                    router.navigate('/');
                                 }
                             }} style={styles.backButton}>
                                 <ChevronLeft size={24} color={Colors.light.text} />

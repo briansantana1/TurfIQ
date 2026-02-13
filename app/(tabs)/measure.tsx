@@ -1,6 +1,6 @@
 import Colors from '@/constants/Colors';
 import { Coordinate, useZones } from '@/context/ZoneContext';
-import area from '@turf/area';
+import { area } from '@turf/area';
 import { polygon as turfPolygon } from '@turf/helpers';
 import { useRouter } from 'expo-router';
 import {
@@ -96,7 +96,7 @@ export default function MeasureScreen() {
                             if (router.canGoBack()) {
                                 router.back();
                             } else {
-                                router.replace('/');
+                                router.navigate('/');
                             }
                         }} style={styles.backButton}>
                             <ChevronLeft size={24} color={Colors.light.text} />

@@ -1,26 +1,38 @@
-import React from 'react';
+import Colors from '@/constants/Colors';
 import {
-    View,
-    Text,
-    StyleSheet,
-    ScrollView,
-    Pressable,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import {
-    User,
-    Crown,
-    Settings,
-    HelpCircle,
-    Star,
-    ChevronRight,
     Bell,
+    ChevronRight,
+    Crown,
     Database,
     FileText,
+    HelpCircle,
+    Settings,
+    Star,
+    User,
 } from 'lucide-react-native';
-import Colors from '@/constants/Colors';
+import React from 'react';
+import {
+    Alert,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
+    const handleAction = (action: string) => {
+        switch (action) {
+            case 'upgrade':
+                Alert.alert('TurfIQ Pro', 'Subscriptions are coming soon! You will get unlimited zones and advanced spreader settings.');
+                break;
+            default:
+                Alert.alert('Coming Soon', 'This feature is currently under development.');
+                break;
+        }
+    };
+
     const menuItems = [
         {
             icon: Crown,
@@ -124,6 +136,7 @@ export default function ProfileScreen() {
                                     pressed && { opacity: 0.85 },
                                     i === menuItems.length - 1 && styles.menuItemLast,
                                 ]}
+                                onPress={() => handleAction(item.action)}
                             >
                                 <View style={styles.menuLeft}>
                                     <View
