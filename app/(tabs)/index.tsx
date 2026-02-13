@@ -75,7 +75,7 @@ export default function DashboardScreen() {
           <View style={styles.header}>
             <View>
               <Text style={styles.greeting}>Good evening 👋</Text>
-              <Text style={styles.title}>Lawn Dashboard</Text>
+              <Text style={styles.title}>TurfIQ Dashboard</Text>
             </View>
             <View style={styles.proBadge}>
               <Leaf size={14} color={Colors.light.primary} />
