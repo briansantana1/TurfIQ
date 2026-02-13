@@ -6,8 +6,9 @@ import {
     getTotalBrands,
     getTotalModels,
     getTotalSettings,
+    SPREADER_SETTINGS,
     SpreaderBrand,
-    SpreaderModel,
+    SpreaderModel
 } from '@/data/spreaderDatabase';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
@@ -343,39 +344,145 @@ export default function ToolsScreen() {
                                 </View>
                             </View>
 
-                            {parseFloat(npkInput.n) > 0 && (
-                                <View style={styles.npkResult}>
-                                    <Text style={styles.npkResultTitle}>Analysis</Text>
-                                    <View style={styles.npkBar}>
-                                        <View style={[styles.npkBarSegment, { flex: parseFloat(npkInput.n) || 1, backgroundColor: Colors.light.primary }]} />
-                                        <View style={[styles.npkBarSegment, { flex: parseFloat(npkInput.p) || 0.1, backgroundColor: Colors.light.info }]} />
-                                        <View style={[styles.npkBarSegment, { flex: parseFloat(npkInput.k) || 0.1, backgroundColor: Colors.light.accent }]} />
+                            {parseFloat(npkInput.n) > 0 && (() => {
+                                const n = parseFloat(npkInput.n) || 0;
+                                const p = parseFloat(npkInput.p) || 0;
+                                const k = parseFloat(npkInput.k) || 0;
+
+                                // Determine fertilizer type and recommendations
+                                let fertilizerType = '';
+                                let recommendation = '';
+                                let seasonalUse = '';
+                                let applicationTip = '';
+
+                                if (n >= 25) {
+                                    fertilizerType = 'High Nitrogen';
+                                    recommendation = 'Excellent for spring green-up and promoting lush, green growth';
+                                    seasonalUse = 'Best for: Spring & Early Summer';
+                                    applicationTip = 'Apply when grass is actively growing';
+                                } else if (n >= 15 && k >= 10) {
+                                    fertilizerType = 'Balanced Fertilizer';
+                                    recommendation = 'All-purpose fertilizer for general lawn maintenance';
+                                    seasonalUse = 'Best for: Any Season';
+                                    applicationTip = 'Great for regular feeding throughout the year';
+                                } else if (k > n && k >= 10) {
+                                    fertilizerType = 'Fall Winterizer';
+                                    recommendation = 'High potassium helps prepare lawn for winter stress';
+                                    seasonalUse = 'Best for: Late Fall';
+                                    applicationTip = 'Apply 4-6 weeks before first frost';
+                                } else if (p >= 10) {
+                                    fertilizerType = 'Starter Fertilizer';
+                                    recommendation = 'High phosphorus promotes root development for new lawns';
+                                    seasonalUse = 'Best for: New Lawn Establishment';
+                                    applicationTip = 'Apply when seeding or sodding';
+                                } else if (n >= 10) {
+                                    fertilizerType = 'Moderate Nitrogen';
+                                    recommendation = 'Good for steady growth without excessive top growth';
+                                    seasonalUse = 'Best for: Summer Maintenance';
+                                    applicationTip = 'Apply during active growing season';
+                                } else {
+                                    fertilizerType = 'Low Nitrogen';
+                                    recommendation = 'Gentle feeding for established lawns';
+                                    seasonalUse = 'Best for: Maintenance Feeding';
+                                    applicationTip = 'Safe for frequent applications';
+                                }
+
+                                // Calculate application rate for 1 lb N per 1000 sq ft
+                                const lbsPerThousand = n > 0 ? (1 / (n / 100)).toFixed(1) : '0';
+
+                                // Find matching products
+                                const matchingProducts = SPREADER_SETTINGS.filter(setting => {
+                                    const productName = setting.productName.toLowerCase();
+                                    const npkPattern = `${Math.round(n)}-${Math.round(p)}-${Math.round(k)}`;
+                                    return productName.includes(npkPattern);
+                                });
+
+                                const uniqueProducts = Array.from(new Set(matchingProducts.map(s => s.productName)));
+
+                                return (
+                                    <View style={styles.npkResult}>
+                                        {/* Analysis Bar */}
+                                        <Text style={styles.npkResultTitle}>Analysis</Text>
+                                        <View style={styles.npkBar}>
+                                            <View style={[styles.npkBarSegment, { flex: n || 1, backgroundColor: Colors.light.primary }]} />
+                                            <View style={[styles.npkBarSegment, { flex: p || 0.1, backgroundColor: Colors.light.info }]} />
+                                            <View style={[styles.npkBarSegment, { flex: k || 0.1, backgroundColor: Colors.light.accent }]} />
+                                        </View>
+                                        <View style={styles.npkExplain}>
+                                            <View style={styles.npkExplainRow}>
+                                                <View style={[styles.npkDot, { backgroundColor: Colors.light.primary }]} />
+                                                <Text style={styles.npkExplainText}>
+                                                    <Text style={{ fontWeight: '700' }}>Nitrogen ({npkInput.n}%)</Text>
+                                                    {' — Promotes leaf growth and green color'}
+                                                </Text>
+                                            </View>
+                                            <View style={styles.npkExplainRow}>
+                                                <View style={[styles.npkDot, { backgroundColor: Colors.light.info }]} />
+                                                <Text style={styles.npkExplainText}>
+                                                    <Text style={{ fontWeight: '700' }}>Phosphorus ({npkInput.p || '0'}%)</Text>
+                                                    {' — Root development and flowering'}
+                                                </Text>
+                                            </View>
+                                            <View style={styles.npkExplainRow}>
+                                                <View style={[styles.npkDot, { backgroundColor: Colors.light.accent }]} />
+                                                <Text style={styles.npkExplainText}>
+                                                    <Text style={{ fontWeight: '700' }}>Potassium ({npkInput.k || '0'}%)</Text>
+                                                    {' — Stress tolerance and disease resistance'}
+                                                </Text>
+                                            </View>
+                                        </View>
+
+                                        {/* Recommendation Card */}
+                                        <View style={styles.npkRecommendation}>
+                                            <View style={styles.npkRecommendationHeader}>
+                                                <Text style={styles.npkRecommendationType}>{fertilizerType}</Text>
+                                                <View style={styles.npkSeasonBadge}>
+                                                    <Text style={styles.npkSeasonText}>{seasonalUse.replace('Best for: ', '')}</Text>
+                                                </View>
+                                            </View>
+                                            <Text style={styles.npkRecommendationText}>{recommendation}</Text>
+                                            <Text style={styles.npkApplicationTip}>💡 {applicationTip}</Text>
+                                        </View>
+
+                                        {/* Application Calculator */}
+                                        <View style={styles.npkCalculator}>
+                                            <Text style={styles.npkCalculatorTitle}>Application Calculator</Text>
+                                            <View style={styles.npkCalculatorRow}>
+                                                <Text style={styles.npkCalculatorLabel}>To apply 1 lb of nitrogen per 1,000 sq ft:</Text>
+                                                <Text style={styles.npkCalculatorValue}>{lbsPerThousand} lbs of product</Text>
+                                            </View>
+                                            <Text style={styles.npkCalculatorNote}>
+                                                For a {5000} sq ft lawn, you'd need {(parseFloat(lbsPerThousand) * 5).toFixed(1)} lbs total
+                                            </Text>
+                                        </View>
+
+                                        {/* Matching Products */}
+                                        {uniqueProducts.length > 0 && (
+                                            <View style={styles.npkProducts}>
+                                                <Text style={styles.npkProductsTitle}>
+                                                    Products with this ratio ({uniqueProducts.length})
+                                                </Text>
+                                                {uniqueProducts.slice(0, 3).map((productName, index) => (
+                                                    <View key={index} style={styles.npkProductItem}>
+                                                        <Text style={styles.npkProductName}>{productName}</Text>
+                                                        <ChevronRight size={16} color={Colors.light.textSecondary} />
+                                                    </View>
+                                                ))}
+                                                {uniqueProducts.length > 3 && (
+                                                    <Pressable
+                                                        style={styles.npkViewAllButton}
+                                                        onPress={() => setActiveTab('search')}
+                                                    >
+                                                        <Text style={styles.npkViewAllText}>
+                                                            View all {uniqueProducts.length} products
+                                                        </Text>
+                                                    </Pressable>
+                                                )}
+                                            </View>
+                                        )}
                                     </View>
-                                    <View style={styles.npkExplain}>
-                                        <View style={styles.npkExplainRow}>
-                                            <View style={[styles.npkDot, { backgroundColor: Colors.light.primary }]} />
-                                            <Text style={styles.npkExplainText}>
-                                                <Text style={{ fontWeight: '700' }}>Nitrogen ({npkInput.n}%)</Text>
-                                                {' — Promotes leaf growth and green color'}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.npkExplainRow}>
-                                            <View style={[styles.npkDot, { backgroundColor: Colors.light.info }]} />
-                                            <Text style={styles.npkExplainText}>
-                                                <Text style={{ fontWeight: '700' }}>Phosphorus ({npkInput.p || '0'}%)</Text>
-                                                {' — Root development and flowering'}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.npkExplainRow}>
-                                            <View style={[styles.npkDot, { backgroundColor: Colors.light.accent }]} />
-                                            <Text style={styles.npkExplainText}>
-                                                <Text style={{ fontWeight: '700' }}>Potassium ({npkInput.k || '0'}%)</Text>
-                                                {' — Stress tolerance and disease resistance'}
-                                            </Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            )}
+                                );
+                            })()}
                         </View>
                     )}
 
@@ -789,5 +896,117 @@ const styles = StyleSheet.create({
     },
     bottomSpacer: {
         height: 20,
+    },
+    // Enhanced NPK Decoder Styles
+    npkRecommendation: {
+        backgroundColor: Colors.light.primaryLight + '15',
+        borderRadius: 12,
+        padding: 16,
+        marginTop: 16,
+        borderWidth: 1,
+        borderColor: Colors.light.primary + '30',
+    },
+    npkRecommendationHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    npkRecommendationType: {
+        fontSize: 18,
+        fontWeight: '700',
+        color: Colors.light.primary,
+    },
+    npkSeasonBadge: {
+        backgroundColor: Colors.light.primary,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 8,
+    },
+    npkSeasonText: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: Colors.light.surface,
+    },
+    npkRecommendationText: {
+        fontSize: 15,
+        color: Colors.light.text,
+        lineHeight: 22,
+        marginBottom: 8,
+    },
+    npkApplicationTip: {
+        fontSize: 14,
+        color: Colors.light.textSecondary,
+        fontStyle: 'italic',
+    },
+    npkCalculator: {
+        backgroundColor: Colors.light.surface,
+        borderRadius: 12,
+        padding: 16,
+        marginTop: 16,
+        borderWidth: 1,
+        borderColor: Colors.light.border,
+    },
+    npkCalculatorTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: Colors.light.text,
+        marginBottom: 12,
+    },
+    npkCalculatorRow: {
+        marginBottom: 8,
+    },
+    npkCalculatorLabel: {
+        fontSize: 14,
+        color: Colors.light.textSecondary,
+        marginBottom: 4,
+    },
+    npkCalculatorValue: {
+        fontSize: 20,
+        fontWeight: '700',
+        color: Colors.light.primary,
+    },
+    npkCalculatorNote: {
+        fontSize: 13,
+        color: Colors.light.textMuted,
+        marginTop: 8,
+        fontStyle: 'italic',
+    },
+    npkProducts: {
+        backgroundColor: Colors.light.surface,
+        borderRadius: 12,
+        padding: 16,
+        marginTop: 16,
+        borderWidth: 1,
+        borderColor: Colors.light.border,
+    },
+    npkProductsTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: Colors.light.text,
+        marginBottom: 12,
+    },
+    npkProductItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.light.border,
+    },
+    npkProductName: {
+        fontSize: 14,
+        color: Colors.light.text,
+        flex: 1,
+    },
+    npkViewAllButton: {
+        marginTop: 12,
+        paddingVertical: 12,
+        alignItems: 'center',
+    },
+    npkViewAllText: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: Colors.light.primary,
     },
 });
