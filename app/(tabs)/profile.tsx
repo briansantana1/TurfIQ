@@ -1,4 +1,5 @@
 import Colors from '@/constants/Colors';
+import { useRouter } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
 import {
     Bell,
@@ -8,8 +9,7 @@ import {
     FileText,
     HelpCircle,
     Settings,
-    Star,
-    User,
+    User
 } from 'lucide-react-native';
 import React from 'react';
 import {
@@ -79,13 +79,6 @@ export default function ProfileScreen() {
             subtitle: 'Get in touch with us',
             color: Colors.light.secondary,
             action: 'contact',
-        },
-        {
-            icon: Star,
-            title: 'Rate This App',
-            subtitle: 'Love it? Let us know!',
-            color: Colors.light.accent,
-            action: 'rate',
         },
         {
             icon: FileText,
