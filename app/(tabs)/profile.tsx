@@ -25,10 +25,10 @@ export default function ProfileScreen() {
     const handleAction = (action: string) => {
         switch (action) {
             case 'upgrade':
-                Alert.alert('TurfIQ Pro', 'Subscriptions are coming soon! You will get unlimited zones and advanced spreader settings.');
+                Alert.alert('TurfIQ Pro', 'Subscriptions are coming soon! You will get unlimited zones, full spreader database access, and advanced lawn diagnostics.');
                 break;
             default:
-                Alert.alert('Coming Soon', 'This feature is currently under development.');
+                Alert.alert('Coming Soon', 'This feature is currently under development. Stay tuned for future updates!');
                 break;
         }
     };
@@ -44,7 +44,7 @@ export default function ProfileScreen() {
         {
             icon: Database,
             title: 'Saved Data',
-            subtitle: '0 zones · 0 calculations',
+            subtitle: 'Manage your lawn zones',
             color: Colors.light.info,
             action: 'data',
         },

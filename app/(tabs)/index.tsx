@@ -51,7 +51,7 @@ export default function DashboardScreen() {
       icon: Target,
       color: Colors.light.accent,
       bg: Colors.light.cautionBg,
-      route: '/tools' as const,
+      route: '/tools?tab=spreader' as const,
     },
     {
       id: 'npk',
@@ -60,7 +60,7 @@ export default function DashboardScreen() {
       icon: FlaskConical,
       color: '#8B5CF6',
       bg: '#EDE9FE',
-      route: '/tools' as const,
+      route: '/tools?tab=npk' as const,
     },
   ];
 

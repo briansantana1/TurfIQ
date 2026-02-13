@@ -19,7 +19,7 @@ import {
     Shield,
     Target
 } from 'lucide-react-native';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
     Pressable,
     ScrollView,
@@ -36,7 +36,14 @@ type ToolTab = 'spreader' | 'npk' | 'cost';
 
 export default function ToolsScreen() {
     const router = useRouter();
+    const params = useLocalSearchParams<{ tab?: string }>();
     const [activeTab, setActiveTab] = useState<ToolTab>('spreader');
+
+    useEffect(() => {
+        if (params.tab === 'spreader' || params.tab === 'npk' || params.tab === 'cost') {
+            setActiveTab(params.tab as ToolTab);
+        }
+    }, [params.tab]);
     const [searchQuery, setSearchQuery] = useState('');
     const [npkInput, setNpkInput] = useState({ n: '', p: '', k: '' });
 
