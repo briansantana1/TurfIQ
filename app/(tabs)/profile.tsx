@@ -1,4 +1,5 @@
 import Colors from '@/constants/Colors';
+import * as WebBrowser from 'expo-web-browser';
 import {
     Bell,
     ChevronRight,
@@ -26,6 +27,12 @@ export default function ProfileScreen() {
         switch (action) {
             case 'upgrade':
                 Alert.alert('TurfIQ Pro', 'Subscriptions are coming soon! You will get unlimited zones, full spreader database access, and advanced lawn diagnostics.');
+                break;
+            case 'privacy':
+                WebBrowser.openBrowserAsync('https://lawnguardian.net/privacy-policy');
+                break;
+            case 'terms':
+                WebBrowser.openBrowserAsync('https://lawnguardian.net/terms-of-use');
                 break;
             default:
                 Alert.alert('Coming Soon', 'This feature is currently under development. Stay tuned for future updates!');
@@ -78,10 +85,17 @@ export default function ProfileScreen() {
         },
         {
             icon: FileText,
-            title: 'Terms & Privacy',
-            subtitle: 'Legal information',
+            title: 'Privacy Policy',
+            subtitle: 'Data usage & protection',
             color: Colors.light.textMuted,
-            action: 'legal',
+            action: 'privacy',
+        },
+        {
+            icon: FileText,
+            title: 'Terms of Use',
+            subtitle: 'App usage agreement',
+            color: Colors.light.textMuted,
+            action: 'terms',
         },
     ];
 
