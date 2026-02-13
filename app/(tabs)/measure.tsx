@@ -2,7 +2,7 @@ import Colors from '@/constants/Colors';
 import { Coordinate, useZones } from '@/context/ZoneContext';
 import { area } from '@turf/area';
 import { polygon as turfPolygon } from '@turf/helpers';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
     Check,
     ChevronLeft,
@@ -13,7 +13,7 @@ import {
     Trash2,
     Undo2
 } from 'lucide-react-native';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     Alert,
     Pressable,
@@ -45,11 +45,16 @@ function calculatePolygonArea(points: Coordinate[]): number {
 
 export default function MeasureScreen() {
     const router = useRouter();
+    const params = useLocalSearchParams<{ tab?: string }>();
     const mapRef = useRef<MapView>(null);
     const { zones, addZone, deleteZone } = useZones();
     const [isDrawing, setIsDrawing] = useState(false);
     const [currentPoints, setCurrentPoints] = useState<Coordinate[]>([]);
     const [mapType, setMapType] = useState<'standard' | 'satellite' | 'hybrid'>('hybrid');
+
+    useEffect(() => {
+        // Param handling logic can be added here
+    }, [params]);
 
     const handleMapPress = useCallback(
         (e: any) => {

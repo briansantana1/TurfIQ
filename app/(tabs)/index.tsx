@@ -33,7 +33,7 @@ export default function DashboardScreen() {
       icon: Map,
       color: Colors.light.primary,
       bg: Colors.light.safeBg,
-      route: '/measure' as const,
+      route: '/measure?tab=measure' as const,
     },
     {
       id: 'calculate',
@@ -42,7 +42,7 @@ export default function DashboardScreen() {
       icon: Calculator,
       color: Colors.light.info,
       bg: Colors.light.highBg,
-      route: '/calculate' as const,
+      route: '/calculate?tab=calculate' as const,
     },
     {
       id: 'spreader',
@@ -86,7 +86,7 @@ export default function DashboardScreen() {
           {/* Hero Card */}
           <Pressable
             style={styles.heroCard}
-            onPress={() => router.navigate('/measure')}
+            onPress={() => router.navigate('/measure?tab=measure')}
           >
             <View style={styles.heroContent}>
               <View style={styles.heroIconContainer}>
@@ -144,7 +144,7 @@ export default function DashboardScreen() {
             </Text>
             <Pressable
               style={styles.emptyZonesButton}
-              onPress={() => router.navigate('/measure')}
+              onPress={() => router.navigate('/measure?tab=measure')}
             >
               <Text style={styles.emptyZonesButtonText}>
                 + Add First Zone

@@ -1,7 +1,7 @@
 import Colors from '@/constants/Colors';
 import { useZones, Zone } from '@/context/ZoneContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
     ChevronLeft,
     History as HistoryIcon,
@@ -33,7 +33,12 @@ interface HistoryItem {
 
 export default function CalculateScreen() {
     const router = useRouter();
+    const params = useLocalSearchParams<{ tab?: string }>();
     const { zones } = useZones();
+
+    useEffect(() => {
+        // Param handling logic
+    }, [params]);
     const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
     const [sqft, setSqft] = useState('');
     const [coverageRate, setCoverageRate] = useState(''); // For granular: sq ft / bag, For liquid: fl oz / 1K
